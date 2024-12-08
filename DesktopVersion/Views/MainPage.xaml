@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopVersion.Views.MainPage"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:vm="clr-namespace:DesktopVersion.ViewModels"
+             xmlns:tms="clr-namespace:DesktopVersion.ItemTemplateSelectors"
+             Shell.NavBarIsVisible="False"
+             x:DataType="vm:MainPageViewModel"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <tms:DataRowItemTemplateSelector x:Key="dataRowItemTemplateSelector" />
+
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="LightBlue"
+                StrokeShape="RoundRectangle 2">
+            <HorizontalStackLayout Spacing="5">
+                <Button Text="CreateDataBase"
+                        Command="{Binding CreateDatabaseCommand}" />
+
+                <Button Text="OpenDataBase"
+                        Command="{Binding OpenDatabaseCommand}" />
+                <Button Text="DropDataBase"
+                        Command="{Binding DropDatabaseCommand}" />
+
+                <Border WidthRequest="2"
+                        BackgroundColor="Gray" />
+
+                <Button Text="CreateTale"
+                        Command="{Binding CreateTableCommand}" />
+
+                <Button Text="DeleteTable"
+                        Command="{Binding DropTableCommand}" />
+
+                <Border WidthRequest="2"
+                        BackgroundColor="Gray" />
+
+                <Button Text="CreateColumn"
+                        Command="{Binding CreateColumnCommand}" />
+            </HorizontalStackLayout>
+        </Border>
+
+        <Border  Grid.Row="1"
+                 Grid.Column="0"
+                 BackgroundColor="LightGray">
+
+            <material:TreeView ItemsSource="{Binding DatabasesTreeViewNodes}"
+                               SelectedItem="{Binding SelectedNode}"
+                               SelectionMode="Single" />
+
+        </Border>
+
+        <Grid x:Name="DataBaseInfoGrid"
+              Grid.Row="1"
+              Grid.Column="1"
+              IsVisible="{Binding IsDatabaseInfoVisible}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Text="DataBase" />
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   Text="{Binding SelectedDatabase.Name}" />
+
+            <Label Grid.Row="0"
+                   Grid.Column="2"
+                   Text="{Binding SelectedDatabase.FolderPath}" />
+        </Grid>
+
+        <Grid x:Name="TableInfoGrid"
+              Grid.Row="1"
+              Grid.Column="1"
+              IsVisible="{Binding IsTableInfoVisible}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <HorizontalStackLayout  Grid.Row="0"
+                                    Grid.Column="0">
+                <Label Text="Table" />
+                <Label Text="{Binding SelectedTable.Name}" />
+                <Button Text="AddEmtyRow"
+                        Command="{Binding AddEmptyRowCommand}" />
+            </HorizontalStackLayout>
+
+            <Grid x:Name="HeaderGrid"
+                  Grid.Column="0"
+                  Grid.Row="1"
+                  HorizontalOptions="Fill"
+                  BackgroundColor="Gray">
+
+            </Grid>
+
+            <CollectionView Grid.Column="0"
+                            Grid.Row="2"
+                            ItemsSource="{Binding SelectedTable.Data}"
+                            ItemTemplate="{x:StaticResource dataRowItemTemplateSelector}" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

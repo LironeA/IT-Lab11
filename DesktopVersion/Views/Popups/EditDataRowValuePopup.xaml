@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="DesktopVersion.Views.Popups.EditDataRowValuePopup"
+                 xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 xmlns:vm="clr-namespace:DesktopVersion.ViewModels"
+                 xmlns:pages="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 x:DataType="vm:EditDataRowValuePopupVM">
+    <Border BackgroundColor="White"
+            StrokeShape="RoundRectangle 5"
+            HeightRequest="500"
+            WidthRequest="500">
+        <VerticalStackLayout>
+            <Label Text="Edit DataRowValue"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Entry x:Name="ValueEntry"
+                   Placeholder="Value"
+                   TextColor="Black"
+                   Text="{Binding Value}" />
+            <Button Text="Save value" Command="{Binding SaveCommand}"/>
+        </VerticalStackLayout>
+    </Border>
+</pages:PopupPage>

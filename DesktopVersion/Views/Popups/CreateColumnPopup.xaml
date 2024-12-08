@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="DesktopVersion.Views.Popups.CreateColumnPopup"
+                 xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 xmlns:vm="clr-namespace:DesktopVersion.ViewModels"
+                 xmlns:pages="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 x:DataType="vm:CreateColumnPopupVM">
+    <Border BackgroundColor="White"
+            StrokeShape="RoundRectangle 5"
+            HeightRequest="500"
+            WidthRequest="500">
+        <StackLayout>
+            <Label Text="Create Column" />
+            <Entry x:Name="NameEntry"
+                   Placeholder="Column Name"
+                   TextColor="Black"
+                   Text="{Binding Name}" />
+
+            <HorizontalStackLayout>
+                <Label Text="Is Primary" />
+                <CheckBox x:Name="IsPrimaryCheckBox"
+                          IsChecked="{Binding IsPrimaryKey}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Nullable" />
+                <CheckBox x:Name="NullableCheckBox"
+                          IsChecked="{Binding Nullable}" />
+            </HorizontalStackLayout>
+
+            <Entry x:Name="defaultEntry"
+                   Placeholder="Default Value"
+                   TextColor="Black"
+                   Text="{Binding DefaultValue}" />
+
+            <Picker x:Name="TypePicker"
+                    Title="Column Type"
+                    BackgroundColor="Gray"
+                    TextColor="Black"
+                    ItemsSource="{Binding ColumnTypes}"
+                    SelectedItem="{Binding Type}" />
+
+            <Button x:Name="CreateButton"
+                    Text="Create"
+                    Command="{Binding CreateCommand}" />
+
+        </StackLayout>
+
+    </Border>
+</pages:PopupPage>
