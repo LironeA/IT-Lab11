@@ -1,0 +1,189 @@
+@startuml
+
+package DataBaseCore.Models {
+    class Column {
+        + int Id
+        + bool IsPrimaryKey
+        + string Name
+        + bool Nullable
+        + string DefaultValue
+        + ColumnType Type
+
+        + Column()
+        + Column(string name, bool isPrimaryKey, ColumnType type, bool nullable, string defaultValue = null)
+        + Column(ColumnJson tableJson)
+        + string ToString(object value)
+        + object Parse(string value)
+    }
+
+    enum ColumnType {
+        Int
+        Float
+        String
+        Bool
+        Char
+    }
+
+    class DataRow {
+        + int Id
+        + List<DataValue> Values
+    }
+
+    class DataValue {
+        + int Id
+        + Column Column
+        + object Value
+    }
+
+    class Table {
+        + int Id
+        + string Name
+        + List<Column> Columns
+        + List<DataRow> Data
+
+        + Table(string name)
+        + Table(TableJson tableJson)
+        + void AddColumn(Column column)
+        + Column GetColumn(string name)
+        + void AddData(List<DataRow> data)
+        + void AddData(DataRow data)
+        + List<DataRow> GetData()
+    }
+
+    class DataBase {
+        + int Id
+        + string Name
+        + string RootDirectoryPath
+        + string FolderPath
+        + List<Table> Tables
+
+        + DataBase()
+        + DataBase(string name, string path)
+        + DataBase(string path)
+        + DataBase(DataBaseJson dataBaseJson)
+        + Table GetTable(string name)
+        + void AddTable(Table table)
+    }
+}
+
+package DataBaseCore {
+    class DataBaseController {
+        - int _idCounter
+        + List<DataBase> ConnectedDatabases
+
+        + DataBaseController()
+        + DataBase CreateDB(string name, string path)
+        + void SaveDbToDisk(DataBase db)
+        + DataBase LoadDbFromDisk(string path)
+        + void CreateTable(DataBase db, Table tb)
+        + void CreateColumn(Table tb, Column column)
+        + void AddDataRow(Table table)
+        + void SetDataValue(DataValue dv, string newValue)
+        + void DropDatabase(DataBase db)
+        + void DropTable(DataBase db, Table table)
+    }
+  
+    class SaveManger {
+        + static void Save(DataBase db)
+        + static DataBase Load(string path)
+        - static void Delete(string folderPath)
+        - static void DeleteTable(string folderPath, string name)
+    }
+}
+
+package DesktopVersion.Services {
+    class DataBaseService implements IDataBaseService{
+        - static DataBaseController _instance
+        - DataBaseController _controller
+        + List<DataBase> GetConnectedDatabases()
+        + DataBase CreateDatabase(string name, string path)
+        + DataBase OpenDatabase(string path)
+        + void CreateTable(DataBase db, string tableName)
+        + void CreateColumn(DataBase db, Table tb, Column column)
+        + void AddDataRow(DataBase db, Table table)
+        + void SetDataValue(DataBase db, DataValue dv, string newValue)
+        + void DropDatabase(DataBase db)
+        + void DropTable(DataBase db, Table table)
+    }
+
+    interface IDataBaseService {
+        + void DropDatabase(DataBase db)
+        + void SetDataValue(DataBase db, DataValue dv, string newValue)
+        + void CreateColumn(DataBase db, Table tb, Column column)
+        + void CreateTable(DataBase db, string tableName)
+        + DataBase OpenDatabase(string path)
+        + DataBase CreateDatabase(string name, string path)
+        + List<DataBase> GetConnectedDatabases()
+        + void AddDataRow(DataBase db, Table table)
+        + void DropTable(DataBase db, Table table)
+    }
+
+}
+
+package DesktopVersion.ViewModels {
+    class MainPageViewModel implements BaseViewModel {
+        + ObservableCollection<DatabasesTreeViewNode> DatabasesTreeViewNodes
+        + DatabasesTreeViewNode SelectedNode
+        + bool IsDatabaseInfoVisible
+        + bool IsTableInfoVisible
+        + DatabaseOM SelectedDatabase
+        + TableOM SelectedTable
+        + ObservableCollection<DataGridColumn> DataGridColumns
+        + DataTemplate DataTemplate
+        + List<DataBase> _dataBases
+        + Action<ObservableCollection<ColumnOM>> ConstructHeaderAction
+
+        + MainPageViewModel(IDataBaseService databaseService, IPopupNavigation popupNavigation, IFolderPickerService folderPickerService)
+        + Task UpdateTreeView()
+        + Task CreateDatabase()
+        + Task CreateDatabaseCallBack(CreateDatabasePopupResult result)
+        + Task OpenDatabase()
+        + Task CreateTable()
+        + Task CreateColumn()
+        + Task CreateColumnCallback(CreateColumnPopupResult result)
+        + Task DropTable()
+        + Task AddEmptyRow()
+        + Task EditDataRowValue(DataValueOM dataValueOM)
+        + Task EditDataRowValueCallback(EditDataRowValuePopupResult result)
+        + Task DropDatabase()
+        + Task DeleteColumn()
+    }
+    
+    class BaseViewModel
+    {
+     + T GetService<T>()
+    }
+
+    MainPageViewModel --> IDataBaseService : uses
+    MainPageViewModel --> IPopupNavigation : uses
+    MainPageViewModel --> IFolderPickerService : uses
+}
+
+package DesktopVersion.Models.ObservableModels {
+    class DatabasesTreeViewNode {
+        + string Name
+        + int parentId
+        + NodeType NodeType
+        + object NodeObject
+        + ObservableCollection<DatabasesTreeViewNode> Children
+
+        + DatabasesTreeViewNode()
+    }
+
+    enum NodeType {
+        DataBaseNode
+        TableNode
+        ColumnNode
+    }
+}
+
+MainPageViewModel --> DatabasesTreeViewNode : manages
+DataBaseService "1" *-- "1" DataBaseController
+DataBaseController "1" *-- "many" DataBase
+DataBase "1" *-- "many" Table
+Table "1" *-- "many" Column
+Table "1" *-- "many" DataRow
+DataRow "1" *-- "many" DataValue
+DataValue "1" *-- "1" Column
+
+@enduml

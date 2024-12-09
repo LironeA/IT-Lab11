@@ -16,7 +16,7 @@ namespace DesktopVersion.Services
                 var folderPicker = FolderPicker.Default;
                 var folder = await folderPicker.PickAsync();
 
-                if(folder != null)
+                if(folder?.Folder != null)
                 {
                     return folder.Folder.Path;
                 }

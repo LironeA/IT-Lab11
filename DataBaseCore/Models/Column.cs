@@ -84,8 +84,14 @@ namespace DataBaseCore.Models
                     }
                     break;
 
+                    case ColumnType.Char:
+                    var c = char.Parse(value);
+                    return c;
+                    break;
+
                     case ColumnType.String:
                     return value;
+                    break;
 
                     case ColumnType.Bool:
                     bool boolValue = false;
@@ -112,5 +118,6 @@ namespace DataBaseCore.Models
         Float,
         String,
         Bool,
+        Char
     }
 }

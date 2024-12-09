@@ -341,5 +341,23 @@ namespace DesktopVersion.ViewModels
             _databaseService.DropDatabase(db);
             await UpdateTreeView();
         }
+
+        [RelayCommand]
+        public async Task DeleteColumn()
+        {
+            var db = _dataBases.FirstOrDefault(x => x.Id == SelectedTable.ParentId);
+            if(db is null)
+            {
+                return;
+            }
+
+            var tb = db.Tables.FirstOrDefault(x => x.Id == SelectedTable.Id);
+            if(tb is null)
+            {
+                return;
+            }
+
+
+        }
     }
 }
