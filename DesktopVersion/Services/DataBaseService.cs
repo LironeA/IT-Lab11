@@ -73,5 +73,12 @@ namespace DesktopVersion.Services
         {
             _controller.DropTable(db, table);
         }
+
+        public Table TableSelection(DataBase db, Table table, List<Column> columns)
+        {
+            var res = _controller.TableSelection(db, table, columns);
+
+            return res;
+        }
     }
 }

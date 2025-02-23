@@ -48,6 +48,8 @@ namespace DataBaseCore.Models
                 switch(Type)
                 {
                     case ColumnType.Int:
+                    case ColumnType.Float:
+                    case ColumnType.Char:
                     case ColumnType.String:
                     case ColumnType.Bool:
                     return value.ToString();
@@ -118,6 +120,8 @@ namespace DataBaseCore.Models
         Float,
         String,
         Bool,
-        Char
+        Char,
+        Picture,
+        RealInvl
     }
 }

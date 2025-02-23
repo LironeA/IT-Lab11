@@ -118,6 +118,8 @@
                 <Label Text="{Binding SelectedTable.Name}" />
                 <Button Text="AddEmtyRow"
                         Command="{Binding AddEmptyRowCommand}" />
+                <Button Text="ColumnSelection"
+                        Command="{Binding ColumnSelectionCommand}" />
             </HorizontalStackLayout>
 
             <Grid x:Name="HeaderGrid"

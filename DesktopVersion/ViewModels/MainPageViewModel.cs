@@ -8,6 +8,7 @@ using DesktopVersion.Models.DTO;
 using DesktopVersion.Models.ObservableModels;
 using DesktopVersion.Services;
 using DesktopVersion.Views.Popups;
+using Microsoft.Maui.Controls.Compatibility;
 using Mopups.Interfaces;
 using Mopups.PreBaked.PopupPages.EntryInput;
 using Mopups.PreBaked.PopupPages.TextInput;
@@ -359,5 +360,30 @@ namespace DesktopVersion.ViewModels
 
 
         }
+
+        [RelayCommand]
+        public async Task ColumnSelection()
+        {
+            if(SelectedTable is null)
+            {
+                return;
+            }
+
+            var dto = GetService<ColumnSelectionDTO>();
+            dto.ColumnSelectionCallBack = ColumnSelectionCallbackCommand;
+            dto.Table = SelectedTable;
+
+            var popup = GetService<ColumnSelectionPopup>();
+            await _popupNavigation.PushAsync(popup);
+
+        }
+
+        [RelayCommand]
+        public async Task ColumnSelectionCallback()
+        {
+            
+        }
+
+
     }
 }

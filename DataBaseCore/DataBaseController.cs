@@ -29,6 +29,12 @@ namespace DataBaseCore
         public DataBase LoadDbFromDisk(string path)
         {
             var db = SaveManger.Load(path);
+            if(db is null)
+            {
+                return null;
+            }
+
+
             ConnectedDatabases.Add(db);
             db.Id = _idCounter++;
             foreach(var tb in db.Tables)
@@ -88,6 +94,11 @@ namespace DataBaseCore
         public void DropTable(DataBase db, Table table)
         {
             SaveManger.DeleteTable(db.FolderPath, table.Name);
+        }
+
+        public Table TableSelection(DataBase db, Table table, List<Column> columns)
+        {
+            throw new NotImplementedException();
         }
     }
 }

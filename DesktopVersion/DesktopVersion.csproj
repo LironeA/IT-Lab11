@@ -74,6 +74,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\Popups\ColumnSelectionPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\CreateColumnPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

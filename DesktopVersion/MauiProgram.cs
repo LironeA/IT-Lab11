@@ -38,6 +38,8 @@ namespace DesktopVersion
             builder.Services.AddTransient<CreateColumnPopupVM>();
             builder.Services.AddTransient<EditDataRowValuePopup>();
             builder.Services.AddTransient<EditDataRowValuePopupVM>();
+            builder.Services.AddTransient<ColumnSelectionPopup>();
+            builder.Services.AddTransient<ColumnSelectionPopupVM>();
 
 
             builder.Services.AddTransient<IDataBaseService, DataBaseService>();
@@ -46,6 +48,8 @@ namespace DesktopVersion
             builder.Services.AddSingleton<CreateDatabaseDTO>();
             builder.Services.AddSingleton<CreateColumnDTO>();
             builder.Services.AddSingleton<EditDataRowValueDTO>();
+            builder.Services.AddSingleton<ColumnSelectionDTO>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

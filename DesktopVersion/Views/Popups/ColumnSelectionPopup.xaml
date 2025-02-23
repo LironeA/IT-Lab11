@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="DesktopVersion.Views.Popups.ColumnSelectionPopup"
+                 xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                 xmlns:vm="clr-namespace:DesktopVersion.ViewModels"
+                 xmlns:om="clr-namespace:DesktopVersion.Models.ObservableModels"
+                 xmlns:pages="clr-namespace:Mopups.Pages;assembly=Mopups"
+                 x:DataType="vm:ColumnSelectionPopupVM">
+    <Border BackgroundColor="White"
+            StrokeShape="RoundRectangle 5"
+            HeightRequest="500"
+            WidthRequest="500">
+        <CollectionView ItemsSource="{Binding ColumnCollection}"
+                        HorizontalOptions="Center">
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="om:ColumnSelectionOM">
+                    <Grid ColumnDefinitions="*, *"
+                          HorizontalOptions="Fill">
+                        <Label Grid.Column="0"
+                               Text="{Binding Column.Name}"
+                               TextColor="Black"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
+
+                        <CheckBox Grid.Column="1"
+                                    Color="LightBlue"
+                                  IsChecked="{Binding IsSelected}" />
+                    </Grid>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </Border>
+</pages:PopupPage>
